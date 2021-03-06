@@ -108,7 +108,8 @@ public class Commander {
                             pathList.add(command[1]);
                             System.out.println("====  Начало выполнения скрипта по адресу " + command[1] + "  ====");
                             interactiveMod(new BufferedInputStream(new FileInputStream(command[1])));
-                            System.out.println("====  Скрипт успешно выполнен  ====\n");
+                            System.out.println("====  Скрипт " + command[1] + " успешно выполнен  ====\n");
+                            pathList.remove(command[1]);
                             break;
                         case "remove_at":
                             manager.remove_at(command[1]);

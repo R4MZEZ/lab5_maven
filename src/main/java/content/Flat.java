@@ -120,7 +120,7 @@ public class Flat implements Comparable<Flat>{
      * @return true/false
      */
     public boolean isEmpty(){
-        return name == null || name.equals("") || coordinates.getX() == null || coordinates.getY() > 368 || area == null || area < 0 || numberOfRooms == null || numberOfRooms < 0 || livingSpace < 0 || view == null || transport == null || house.getName() == null || house.getNumberOfFlatsOnFloor() < 0 || house.getYear() == null || house.getYear() < 0;
+        return name == null || name.equals("") || coordinates == null || coordinates.getX() == null || coordinates.getY() > 368 || area == null || area < 0 || numberOfRooms == null || numberOfRooms < 0 || livingSpace < 0 || view == null || transport == null || house == null || house.getName() == null || house.getNumberOfFlatsOnFloor() < 0 || house.getYear() == null || house.getYear() < 0;
     }
 
     /**

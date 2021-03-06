@@ -2,7 +2,7 @@
 
 <collectionManager>
     <collection>
-        <flats name="Vova" coordinates="12;3" area="123" numberOfRooms="5" livingSpace="13" view="BAD" transport="FEW">
+        <flats name="Vova" coordinates="2;12" area="123" numberOfRooms="5" livingSpace="13" view="BAD" transport="FEW">
             <house name="hostel" year="2000" numberOfFlatsOnFloor="5" />
         </flats>
         <flats name="Alex" coordinates="1.0;2" area="100" numberOfRooms="5" livingSpace="50" view="BAD" transport="FEW">

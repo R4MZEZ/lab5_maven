@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
  * Вспомогательный класс для корректной сериализации/десериализации класса LocalDateTime (класс времени)
  */
 public class LocalDateTimeAdapter extends XmlAdapter<String,LocalDateTime> {
-    public LocalDateTime unmarshal(String v) throws Exception {
+    public LocalDateTime unmarshal(String v){
         return LocalDateTime.of(Integer.parseInt(v.split(",")[0].split("\\.")[2]),
                                 Integer.parseInt(v.split(",")[0].split("\\.")[1]),
                                 Integer.parseInt(v.split(",")[0].split("\\.")[1]),
