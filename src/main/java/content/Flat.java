@@ -16,8 +16,10 @@ import java.time.format.DateTimeFormatter;
  */
 @XmlType(name = "flat")
 public class Flat implements Comparable<Flat>{
+    private static long static_id = 0;
+
     public Flat(String name, Coordinates coordinates, Long area, Integer numberOfRooms, long livingSpace, View view, Transport transport, House house) {
-        this.id = FlatID.getNewId();
+        this.id = getNewId();
         this.name = name;
         this.coordinates = coordinates;
         this.creationDate = LocalDateTime.now(); //LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm:ss"))
@@ -30,7 +32,7 @@ public class Flat implements Comparable<Flat>{
     }
 
     public Flat() {
-        this.id = FlatID.getNewId();
+        this.id = getNewId();
         this.creationDate = LocalDateTime.now();
     }
     @XmlAttribute(name = "id")
@@ -56,11 +58,17 @@ public class Flat implements Comparable<Flat>{
     @XmlElement(name="house")
     private House house; //Поле может быть null
 
+    static long getNewId() {
+        static_id += 1;
+        return static_id;
+    }
+
     @XmlTransient
     public long getId(){
         return id;
     }
-    public void setId(long id){
+
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -123,15 +131,5 @@ public class Flat implements Comparable<Flat>{
         return name == null || name.equals("") || coordinates == null || coordinates.getX() == null || coordinates.getY() > 368 || area == null || area < 0 || numberOfRooms == null || numberOfRooms < 0 || livingSpace < 0 || view == null || transport == null || house == null || house.getName() == null || house.getNumberOfFlatsOnFloor() < 0 || house.getYear() == null || house.getYear() < 0;
     }
 
-    /**
-     * Класс для хранения и генерации уникальных id
-     */
-    static class FlatID {
-        private static long id = 0;
 
-        static long getNewId() {
-            id += 1;
-            return id;
-        }
-    }
 }

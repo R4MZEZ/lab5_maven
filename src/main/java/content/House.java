@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 /**
  * Класс для хранения данных о доме, в котором находится квартира
  */
-public class House implements Comparable {
+public class House implements Comparable<House> {
     public House(String name, Integer year, int numberOfFlatsOnFloor) {
         this.name = name;
         this.year = year;
@@ -35,8 +35,7 @@ public class House implements Comparable {
     private int numberOfFlatsOnFloor; //Значение поля должно быть больше 0
 
     @Override
-    public int compareTo(Object o) {
-        House obj = (House) o;
+    public int compareTo(House obj) {
         return this.year - obj.getYear();
     }
 }

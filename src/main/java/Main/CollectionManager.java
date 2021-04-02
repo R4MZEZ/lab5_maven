@@ -8,8 +8,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -26,6 +25,8 @@ public class CollectionManager {
     private final LinkedList<Flat> flats = new LinkedList<>();
     private final static LocalDateTime initDate = LocalDateTime.now();
     private final String[] temp = new String[11];
+    private Commander commander;
+    private static final Set<String> pathList = new HashSet<>();
 
     public CollectionManager() {
         manual.put("help", "Вывести справку по доступным командам");
@@ -46,6 +47,9 @@ public class CollectionManager {
         manual.put("filter_less_than_view view", "Вывести элементы, значение поля view которых меньше заданного");
     }
 
+    public void setCommander(Commander commander) {
+        this.commander = commander;
+    }
 
     public static LocalDateTime getInitDate() {
         return initDate;
@@ -55,7 +59,7 @@ public class CollectionManager {
      * Получить информацию о командах
      */
     public void help() {
-        System.out.println(MapToString(manual));
+        System.out.println(mapToString(manual));
     }
 
     /**
@@ -241,7 +245,7 @@ public class CollectionManager {
      * @throws JAXBException если не удалось сериализовать коллекцию
      */
     public void save(CollectionManager manager) throws IOException, JAXBException {
-        FileWriter writer = new FileWriter("outpuut.xml");
+        FileWriter writer = new FileWriter("C:\\Users\\User\\IdeaProjects\\lab5_maven\\src\\main\\java\\inputData\\output.xml");
         JAXBContext context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -345,6 +349,31 @@ public class CollectionManager {
         }
     }
 
+    public void execute_script(String path) throws FileNotFoundException {
+        InputStream stream;
+        try{
+            stream = new BufferedInputStream(new FileInputStream(path));
+        }catch (FileNotFoundException e){
+            System.out.println("Файл для извлечения скрипта не найден. Проверьте путь и права доступа к файлу.");
+            return;
+        }
+        if (commander.getStream().equals(System.in)) {
+            pathList.clear();
+        } else {
+            System.out.println(pathList.toString());
+            System.out.println(path);
+            if (pathList.contains(path)) {
+                System.out.println("#############################################\nОшибка! Один или несколько скриптов зациклены.\n#############################################");
+                return;
+            }
+        }  //Проверка на зацикленность
+        pathList.add(path);
+        System.out.println("====  Начало выполнения скрипта по адресу " + path + "  ====");
+        commander.interactiveMod(stream);
+        System.out.println("====  Скрипт " + path + " успешно выполнен  ====\n");
+        pathList.remove(path);
+    }
+
     /**
      * Получить объект коллекции
      * @return коллекцию
@@ -358,7 +387,7 @@ public class CollectionManager {
      * @param map : объект Map, который нужно преобразовать
      * @return преобразованную строку
      */
-    public String MapToString(Map<String,String> map) {
+    public String mapToString(Map<String,String> map) {
         StringBuilder res = new StringBuilder();
         for (String key : map.keySet()) {
             String value = map.get(key);
