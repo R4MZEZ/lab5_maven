@@ -16,13 +16,31 @@ import java.util.Scanner;
  */
 public class Commander {
 
-    private CollectionManager manager;
-    Invoker invoker;
+    private CollectionManager manager = new CollectionManager();
+    Invoker invoker = new Invoker();
 
     BufferedInputStream stream;
     JAXBContext context;
     Unmarshaller unmarshaller;
 
+    {
+        invoker.register("help", new CommandHelp(manager));
+        invoker.register("info", new CommandInfo(manager));
+        invoker.register("show", new CommandShow(manager));
+        invoker.register("remove_by_id", new CommandRemoveById(manager));
+        invoker.register("add", new CommandAdd(manager));
+        invoker.register("update", new CommandUpdate(manager));
+        invoker.register("clear", new CommandClear(manager));
+        invoker.register("execute_script", new CommandExecuteScript(manager));
+        invoker.register("save", new CommandSave(manager));
+        invoker.register("remove_at", new CommandRemoveAt(manager));
+        invoker.register("remove_last", new CommandRemoveLast(manager));
+        invoker.register("shuffle", new CommandShuffle(manager));
+        invoker.register("average_of_living_space", new CommandAverage(manager));
+        invoker.register("max_by_house", new CommandMaxByHouse(manager));
+        invoker.register("filter_less_than_view", new CommandFilter(manager));
+        invoker.register("exit", new CommandExit(manager));
+    }
     public Commander(String filePath){
         try {
             context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
@@ -43,25 +61,28 @@ public class Commander {
             System.out.println("Ошибка! Файл с входными данными не найден, проверьте путь и права доступа к файлу.");
         } catch (JAXBException e) {
             System.out.println("Ошибка при десериализации документа. Проверьте правильность разметки.");
-        }
+        }finally {
+            manager.setCommander(this);
 
-        invoker = new Invoker();
-        invoker.register("help", new CommandHelp(manager));
-        invoker.register("info", new CommandInfo(manager));
-        invoker.register("show", new CommandShow(manager));
-        invoker.register("remove_by_id", new CommandRemoveById(manager));
-        invoker.register("add", new CommandAdd(manager));
-        invoker.register("update", new CommandUpdate(manager));
-        invoker.register("clear", new CommandClear(manager));
-        invoker.register("execute_script", new CommandExecuteScript(manager));
-        invoker.register("save", new CommandSave(manager));
-        invoker.register("remove_at", new CommandRemoveAt(manager));
-        invoker.register("remove_last", new CommandRemoveLast(manager));
-        invoker.register("shuffle", new CommandShuffle(manager));
-        invoker.register("average_of_living_space", new CommandAverage(manager));
-        invoker.register("max_by_house", new CommandMaxByHouse(manager));
-        invoker.register("filter_less_than_view", new CommandFilter(manager));
-        invoker.register("exit", new CommandExit(manager));
+        }
+//
+//        invoker = new Invoker();
+//        invoker.register("help", new CommandHelp(manager));
+//        invoker.register("info", new CommandInfo(manager));
+//        invoker.register("show", new CommandShow(manager));
+//        invoker.register("remove_by_id", new CommandRemoveById(manager));
+//        invoker.register("add", new CommandAdd(manager));
+//        invoker.register("update", new CommandUpdate(manager));
+//        invoker.register("clear", new CommandClear(manager));
+//        invoker.register("execute_script", new CommandExecuteScript(manager));
+//        invoker.register("save", new CommandSave(manager));
+//        invoker.register("remove_at", new CommandRemoveAt(manager));
+//        invoker.register("remove_last", new CommandRemoveLast(manager));
+//        invoker.register("shuffle", new CommandShuffle(manager));
+//        invoker.register("average_of_living_space", new CommandAverage(manager));
+//        invoker.register("max_by_house", new CommandMaxByHouse(manager));
+//        invoker.register("filter_less_than_view", new CommandFilter(manager));
+//        invoker.register("exit", new CommandExit(manager));
     }
 
     public Commander() {
