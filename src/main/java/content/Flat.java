@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -15,7 +16,7 @@ import java.time.format.DateTimeFormatter;
  * Класс, объекты которого будут храниться в коллекции
  */
 @XmlType(name = "flat")
-public class Flat implements Comparable<Flat>{
+public class Flat implements Comparable<Flat>, Serializable {
     private static long static_id = 0;
 
     public Flat(String name, Coordinates coordinates, Long area, Integer numberOfRooms, long livingSpace, View view, Transport transport, House house) {
@@ -58,7 +59,7 @@ public class Flat implements Comparable<Flat>{
     @XmlElement(name="house")
     private House house; //Поле может быть null
 
-    static long getNewId() {
+    public static long getNewId() {
         static_id += 1;
         return static_id;
     }

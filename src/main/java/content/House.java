@@ -1,11 +1,12 @@
 package content;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import java.io.Serializable;
 
 /**
  * Класс для хранения данных о доме, в котором находится квартира
  */
-public class House implements Comparable<House> {
+public class House implements Comparable<House>, Serializable {
     public House(String name, Integer year, int numberOfFlatsOnFloor) {
         this.name = name;
         this.year = year;

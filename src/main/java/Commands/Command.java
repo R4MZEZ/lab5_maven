@@ -1,8 +1,12 @@
 package Commands;
 
+import Server.CollectionManager;
+
+import java.io.Serializable;
 import java.util.Scanner;
 
-public interface Command {
-    void execute(String argument, Scanner reader);
-//    String getName();
+public interface Command extends Serializable {
+    void execute();
+    boolean validate(String argument, Scanner reader);
+    void setManager(CollectionManager manager);
 }

@@ -2,9 +2,10 @@ package Commands;
 
 import Server.CollectionManager;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class CommandHelp implements Command {
+public class CommandHelp implements Command, Serializable {
 
     CollectionManager manager;
 
@@ -12,8 +13,21 @@ public class CommandHelp implements Command {
         this.manager = manager;
     }
 
+    public CommandHelp() {
+    }
+
     @Override
-    public void execute(String argument, Scanner reader) {
+    public void setManager(CollectionManager manager) {
+        this.manager = manager;
+    }
+
+    @Override
+    public void execute() {
         manager.help();
+    }
+
+    @Override
+    public boolean validate(String argument, Scanner reader) {
+        return true;
     }
 }

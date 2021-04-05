@@ -12,8 +12,21 @@ public class CommandRemoveLast implements Command{
         this.manager = manager;
     }
 
+    public CommandRemoveLast() {
+    }
+
     @Override
-    public void execute(String argument, Scanner reader) {
+    public void setManager(CollectionManager manager) {
+        this.manager = manager;
+    }
+
+    @Override
+    public void execute() {
         manager.remove_last();
+    }
+
+    @Override
+    public boolean validate(String argument, Scanner reader) {
+        return true;
     }
 }

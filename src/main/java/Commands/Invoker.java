@@ -14,12 +14,21 @@ public class Invoker {
         return commandMap.containsKey(commandName);
     }
 
-    public void execute(String commandName, String argument, Scanner reader) {
+    public HashMap<String, Command> getCommandMap() {
+        return commandMap;
+    }
+
+//    public void execute(String commandName, String argument, Scanner reader) {
+//        Command command = commandMap.get(commandName);
+//        command.execute();
+//    }
+    public void execute(Command command){
+        command.execute();
+    }
+
+    public boolean validate(String commandName, String argument, Scanner reader) {
         Command command = commandMap.get(commandName);
-        if (command == null) {
-            throw new IllegalStateException("no command registered for " + commandName);
-        }
-        command.execute(argument, reader);
+        return command.validate(argument, reader);
     }
 }
 

@@ -2,25 +2,33 @@ package Commands;
 
 import Server.CollectionManager;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class CommandAverage implements Command{
+public class CommandAverage implements Command, Serializable {
 
     CollectionManager manager;
     final String name = "average_of_living_space";
-    String argument;
 
     public CommandAverage(CollectionManager manager) {
         this.manager = manager;
     }
 
-    public String getName() {
-        return name;
+    public CommandAverage() {
     }
 
     @Override
-    public void execute(String argument, Scanner reader) {
-        this.argument = argument;
+    public void setManager(CollectionManager manager) {
+        this.manager = manager;
+    }
+
+    @Override
+    public void execute() {
         manager.average_of_living_space();
+    }
+
+    @Override
+    public boolean validate(String argument, Scanner reader) {
+        return true;
     }
 }

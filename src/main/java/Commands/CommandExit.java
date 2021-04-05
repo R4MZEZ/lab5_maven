@@ -2,9 +2,10 @@ package Commands;
 
 import Server.CollectionManager;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class CommandExit implements Command{
+public class CommandExit implements Command, Serializable {
 
     CollectionManager manager;
 
@@ -12,9 +13,22 @@ public class CommandExit implements Command{
         this.manager = manager;
     }
 
+    public CommandExit() {
+    }
+
     @Override
-    public void execute(String argument, Scanner reader) {
-        new CommandSave(manager).execute(null,null);
-        System.out.println("***\tВыход из интерактивного режима\t***");
+    public void setManager(CollectionManager manager) {
+        this.manager = manager;
+    }
+
+    @Override
+    public void execute() {
+        new CommandSave(manager).execute();
+        manager.exit();
+    }
+
+    @Override
+    public boolean validate(String argument, Scanner reader) {
+        return true;
     }
 }

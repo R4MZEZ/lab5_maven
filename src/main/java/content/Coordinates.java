@@ -1,9 +1,11 @@
 package content;
 
+import java.io.Serializable;
+
 /**
  * Класс для хранения координат квартиры
  */
-public class Coordinates {
+public class Coordinates implements Serializable {
     public Coordinates(Float x, long y) {
         this.x = x;
         this.y = y;

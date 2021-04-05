@@ -1,11 +1,12 @@
 package content;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * Класс для хранения вида транспорта собственника квартиры
  */
-public enum Transport {
+public enum Transport implements Serializable {
     FEW,
     LITTLE,
     NORMAL;

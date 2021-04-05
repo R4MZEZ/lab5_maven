@@ -2,27 +2,34 @@ package Commands;
 
 import Server.CollectionManager;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class CommandClear implements Command{
+public class CommandClear implements Command, Serializable {
 
     CollectionManager manager;
     final String name = "clear";
-    String argument;
 
     public CommandClear(CollectionManager manager) {
         this.manager = manager;
     }
 
-//    @Override
-    public String getName() {
-        return name;
+    public CommandClear() {
     }
 
     @Override
-    public void execute(String argument, Scanner reader) {
-        this.argument = argument;
+    public void setManager(CollectionManager manager) {
+        this.manager = manager;
+    }
+
+    @Override
+    public void execute() {
         manager.clear();
+    }
+
+    @Override
+    public boolean validate(String argument, Scanner reader) {
+        return true;
     }
 }
 

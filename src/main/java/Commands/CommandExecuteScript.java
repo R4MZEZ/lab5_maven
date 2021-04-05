@@ -3,9 +3,10 @@ package Commands;
 import Server.CollectionManager;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class CommandExecuteScript implements Command{
+public class CommandExecuteScript implements Command, Serializable {
 
     CollectionManager manager;
     final String name = "execute_script";
@@ -15,17 +16,26 @@ public class CommandExecuteScript implements Command{
         this.manager = manager;
     }
 
-//    @Override
-    public String getName() {
-        return name;
+    public CommandExecuteScript() {
     }
 
     @Override
-    public void execute(String argument, Scanner reader){
+    public void setManager(CollectionManager manager) {
+        this.manager = manager;
+    }
+
+    @Override
+    public void execute(){
         try {
             manager.execute_script(argument);
         }catch (FileNotFoundException e){
             System.out.println("Файл для извлечения скрипта не найден. Проверьте путь и права доступа к файлу.");
         }
+    }
+
+    @Override
+    public boolean validate(String argument, Scanner reader) {
+        this.argument = argument;
+        return true;
     }
 }

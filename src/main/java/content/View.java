@@ -1,11 +1,12 @@
 package content;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * Класс для хранения видов из окна квартиры
  */
-public enum View {
+public enum View implements Serializable {
     YARD,
     BAD,
     NORMAL,
