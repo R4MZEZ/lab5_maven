@@ -1,4 +1,4 @@
-package Main;
+package tools;
 
 import content.Coordinates;
 

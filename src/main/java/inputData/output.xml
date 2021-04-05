@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <collectionManager>
     <collection>
-        <flats id="1" name="Vova" coordinates="2.0;12" creationDate="02.04.2021, 22:51:48" area="123" numberOfRooms="5" livingSpace="13" view="BAD" transport="FEW">
+        <flats id="1" name="Vova" coordinates="2.0;12" creationDate="04.04.2021, 20:26:14" area="123" numberOfRooms="5" livingSpace="13" view="BAD" transport="FEW">
             <house name="hostel" year="2000" numberOfFlatsOnFloor="5"/>
         </flats>
-        <flats id="2" name="Alex" coordinates="1.0;2" creationDate="02.04.2021, 22:51:48" area="100" numberOfRooms="5" livingSpace="50" view="BAD" transport="FEW">
+        <flats id="2" name="Alex" coordinates="1.0;2" creationDate="04.04.2021, 20:26:14" area="100" numberOfRooms="5" livingSpace="50" view="BAD" transport="FEW">
             <house name="hostel" year="2000" numberOfFlatsOnFloor="5"/>
         </flats>
-        <flats id="3" name="asd" coordinates="123.0;12" creationDate="02.04.2021, 22:51:48" area="123" numberOfRooms="4" livingSpace="12" view="BAD" transport="NORMAL">
+        <flats id="3" name="asd" coordinates="123.0;12" creationDate="04.04.2021, 20:26:14" area="123" numberOfRooms="4" livingSpace="12" view="BAD" transport="NORMAL">
             <house name="asd" year="1" numberOfFlatsOnFloor="4"/>
         </flats>
     </collection>

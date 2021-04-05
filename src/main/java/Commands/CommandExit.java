@@ -1,6 +1,6 @@
 package Commands;
 
-import Main.CollectionManager;
+import Server.CollectionManager;
 
 import java.util.Scanner;
 
@@ -14,6 +14,7 @@ public class CommandExit implements Command{
 
     @Override
     public void execute(String argument, Scanner reader) {
+        new CommandSave(manager).execute(null,null);
         System.out.println("***\tВыход из интерактивного режима\t***");
     }
 }

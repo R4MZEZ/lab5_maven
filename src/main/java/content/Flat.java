@@ -1,7 +1,7 @@
 package content;
 
-import Main.CoordinatesAdapter;
-import Main.LocalDateTimeAdapter;
+import tools.CoordinatesAdapter;
+import tools.LocalDateTimeAdapter;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;

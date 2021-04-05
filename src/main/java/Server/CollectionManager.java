@@ -1,5 +1,7 @@
-package Main;
+package Server;
 
+import tools.Checker;
+import Client.Commander;
 import content.*;
 
 import javax.xml.bind.JAXBContext;
@@ -76,8 +78,7 @@ public class CollectionManager {
      * Показать элементы коллекции
      */
     public void show() {
-        for (Flat flat : flats)
-            System.out.println(flat.NiceToString());
+        flats.forEach(flat -> System.out.println(flat.NiceToString()));
     }
 
     /**
@@ -213,21 +214,16 @@ public class CollectionManager {
 
     /**
      * Удалить элемент коллекции по его id
+     *
      * @param id id(не индекс) нужного элемента
      */
     public void remove_by_id(String id) {
         if (Checker.isLong(id)) {
-            for (int i = 0; i < flats.size(); i++) {
-                if (flats.get(i).getId() == Long.parseLong(id)) {
-                    flats.remove(i);
-                    System.out.println("Элемент успешно удалён.");
-                    return;
-                }
-            }
-            System.out.println("Элемента с id = '" + id + "' не найдено.");
-        } else {
-            System.out.println("Ошибка! 'id' должен быть целым положительным числом. Повторите ввод команды.");
-        }
+            if (flats.stream().anyMatch(flat -> flat.getId() == Long.parseLong(id))) {
+                flats.remove(flats.stream().filter(flat -> flat.getId() == Long.parseLong(id)).findFirst().get());
+                System.out.println("Элемент успешно удалён.");
+            } else System.out.println("Элемента с id = '" + id + "' не найдено.");
+        } else System.out.println("Ошибка! 'id' должен быть целым положительным числом. Повторите ввод команды.");
     }
 
     /**
@@ -295,13 +291,7 @@ public class CollectionManager {
      */
     public void average_of_living_space() {
         if (flats.size() > 0) {
-            Iterator<Flat> iterator = flats.iterator();
-            long sum = 0;
-            while (iterator.hasNext()) {
-                Flat flat = iterator.next();
-                sum += flat.getLivingSpace();
-            }
-            System.out.println("Cреднее значение поля livingSpace равно " + sum / flats.size());
+            System.out.println("Cреднее значение поля livingSpace равно " + flats.stream().mapToLong(Flat::getLivingSpace).average());
         } else System.out.println("Ошибка. Коллекция пуста.");
     }
 
@@ -309,19 +299,9 @@ public class CollectionManager {
      * Вывести элемент коллекции с максимальным значением годом постройки дома
      */
     public void max_by_house() {
-        if (flats.size() > 0) {
-            Iterator<Flat> iterator = flats.iterator();
-            House maxHouse = flats.get(0).getHouse();
-            int index = 0;
-            while (iterator.hasNext()) {
-                Flat flat = iterator.next();
-                if (flat.getHouse().compareTo(maxHouse) > 0) {
-                    index = flats.indexOf(flat);
-                    maxHouse = flat.getHouse();
-                }
-            }
-            System.out.println("Описание элемента с максимальным значением поля 'house':\n" + flats.get(index).NiceToString());
-        } else System.out.println("Ошибка. Коллекция пуста.");
+        if (flats.stream().findAny().isPresent())
+            System.out.println(flats.stream().max(Comparator.comparing(Flat::getHouse)).get().NiceToString());
+        else System.out.println("Ошибка. Коллекция пуста.");
     }
 
     /**
@@ -329,21 +309,11 @@ public class CollectionManager {
      * @param view : объект Enum'a View, относительно которого нужно фильтровать
      */
     public void filter_less_than_view(String view) {
-        if (Checker.isView(view)) {
-            if (flats.size() > 0) {
-                Iterator<Flat> iterator = flats.iterator();
-                StringBuilder res = new StringBuilder();
-                while (iterator.hasNext()) {
-                    Flat flat = iterator.next();
-                    if (flat.getView().compareTo(View.valueOf(view)) < 0)
-                        res.append(flat.NiceToString()).append("\n");
-                }
-                if (res.toString().equals("")) {
-                    System.out.println("Не найдено элементов со значением поля view меньше заданного.");
-                }
-                else System.out.println(res);
-            } else System.out.println("Ошибка. Коллекция пуста.");
-        }else {
+        try {
+            if (flats.stream().anyMatch(flat -> flat.getView().compareTo(View.valueOf(view)) < 0))
+                flats.stream().filter(flat -> flat.getView().compareTo(View.valueOf(view)) < 0).forEach(flat -> System.out.println(flat.NiceToString()));
+            else System.out.println("Не найдено элементов со значением поля view меньше заданного.");
+        }catch (IllegalArgumentException e) {
             System.out.println("Ошибка. Вы ввели недопустимое значение 'view'.");
             View.ViewToString();
         }

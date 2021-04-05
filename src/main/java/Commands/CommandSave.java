@@ -1,6 +1,6 @@
 package Commands;
 
-import Main.CollectionManager;
+import Server.CollectionManager;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.MarshalException;

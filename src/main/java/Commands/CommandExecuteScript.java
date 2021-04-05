@@ -1,6 +1,6 @@
 package Commands;
 
-import Main.CollectionManager;
+import Server.CollectionManager;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -8,9 +8,16 @@ import java.util.Scanner;
 public class CommandExecuteScript implements Command{
 
     CollectionManager manager;
+    final String name = "execute_script";
+    String argument;
 
     public CommandExecuteScript(CollectionManager manager) {
         this.manager = manager;
+    }
+
+//    @Override
+    public String getName() {
+        return name;
     }
 
     @Override

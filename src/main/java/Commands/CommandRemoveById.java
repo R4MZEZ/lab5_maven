@@ -1,7 +1,6 @@
 package Commands;
 
-import Main.Checker;
-import Main.CollectionManager;
+import Server.CollectionManager;
 
 import java.util.Scanner;
 
