@@ -22,7 +22,7 @@ public class Connector implements Runnable{
         this.userPort = userPort;
         this.buffer = buffer;
         try {
-            int PORT = 1212;
+            int PORT = 1213;
             datagramSocket = new DatagramSocket(PORT);
             outputStream = new ObjectOutputStream(b1);
             input = new ObjectInputStream(new ByteArrayInputStream(this.buffer));
