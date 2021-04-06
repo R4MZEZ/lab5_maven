@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class CommandClear implements Command, Serializable {
 
     CollectionManager manager;
-    final String name = "clear";
 
     public CommandClear(CollectionManager manager) {
         this.manager = manager;

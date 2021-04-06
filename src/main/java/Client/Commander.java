@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class Commander {
 
     Invoker invoker = new Invoker();
-    BufferedInputStream stream;
     Client.Connector connector = new Client.Connector();
     Thread connectorThread;
 
@@ -28,7 +27,7 @@ public class Commander {
         invoker.register("update", new CommandUpdate());
         invoker.register("clear", new CommandClear());
         invoker.register("execute_script", new CommandExecuteScript());
-        invoker.register("save", new CommandSave());
+//        invoker.register("save", new CommandSave());
         invoker.register("remove_at", new CommandRemoveAt());
         invoker.register("remove_last", new CommandRemoveLast());
         invoker.register("shuffle", new CommandShuffle());
@@ -39,10 +38,6 @@ public class Commander {
     }
 
     public Commander() {
-    }
-
-    public BufferedInputStream getStream() {
-        return stream;
     }
 
     /**

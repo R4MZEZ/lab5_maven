@@ -18,10 +18,6 @@ public class Invoker {
         return commandMap;
     }
 
-//    public void execute(String commandName, String argument, Scanner reader) {
-//        Command command = commandMap.get(commandName);
-//        command.execute();
-//    }
     public void execute(Command command){
         command.execute();
     }

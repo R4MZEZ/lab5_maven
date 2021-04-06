@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class CommandExecuteScript implements Command, Serializable {
 
     CollectionManager manager;
-    final String name = "execute_script";
     String argument;
 
     public CommandExecuteScript(CollectionManager manager) {

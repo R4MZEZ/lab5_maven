@@ -1,7 +1,5 @@
 package Server;
 
-import tools.Checker;
-import Client.Commander;
 import content.*;
 
 import javax.xml.bind.JAXBContext;
@@ -22,7 +20,6 @@ import java.util.*;
 @XmlType(name = "root")
 @XmlRootElement
 public class CollectionManager {
-    LinkedHashMap<String, String> manual = new LinkedHashMap<>();
     @XmlElementWrapper(name = "collection")
     private final LinkedList<Flat> flats = new LinkedList<>();
     private final static LocalDateTime initDate = LocalDateTime.now();
@@ -120,7 +117,7 @@ public class CollectionManager {
      */
     public void remove_by_id(String id) {
         if (flats.stream().anyMatch(flat -> flat.getId() == Long.parseLong(id))) {
-            flats.remove(flats.stream().filter(flat -> flat.getId() == Long.parseLong(id)).findFirst().get());
+            flats.remove(flats.stream().filter(flat -> flat.getId() == Long.parseLong(id)).findFirst().orElse(null));
             connector.send("Элемент успешно удалён.");
         } else connector.send("Элемента с id = '" + id + "' не найдено.");
     }

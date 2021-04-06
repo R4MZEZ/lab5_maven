@@ -5,7 +5,6 @@ import content.Flat;
 import tools.Checker;
 
 import java.util.Scanner;
-import java.util.logging.StreamHandler;
 
 public class CommandUpdate implements Command{
 

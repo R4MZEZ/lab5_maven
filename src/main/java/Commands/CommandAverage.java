@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class CommandAverage implements Command, Serializable {
 
     CollectionManager manager;
-    final String name = "average_of_living_space";
 
     public CommandAverage(CollectionManager manager) {
         this.manager = manager;
