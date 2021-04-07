@@ -26,17 +26,8 @@ public class CommandSave implements Command{
 
     @Override
     public void execute() {
-        try {
-            manager.save(manager);
-        } catch (FileNotFoundException e) {
-            System.out.println("Ошибка. Файл не найден, проверьте пусть и доступ к файлу.");
-        } catch (IOException e) {
-            System.out.println("Ошибка сохранения.");
-        } catch (MarshalException e) {
-            System.out.println("Ошибка сериализации коллекции в XML.");
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
+        manager.save(manager);
+
     }
 
     @Override

@@ -2,7 +2,7 @@
   <artifact type="jar" name="lab5_maven:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/lab5_maven_jar</output-path>
     <root id="archive" name="lab5_maven.jar">
-      <element id="module-output" name="lab5_maven" />
+      <element id="module-output" name="lab6" />
     </root>
   </artifact>
 </component>

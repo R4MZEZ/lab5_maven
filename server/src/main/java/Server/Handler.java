@@ -14,7 +14,7 @@ public class Handler implements Serializable, Runnable {
     Invoker invoker = new Invoker();
     Connector connector;
     CollectionManager manager;
-    protected static boolean isExit = false;
+    protected boolean isExit = false;
 
     BufferedInputStream stream;
     JAXBContext context;
@@ -23,6 +23,7 @@ public class Handler implements Serializable, Runnable {
     public Handler(String filePath, Connector connector){
         manager = new CollectionManager();
         this.connector = connector;
+        connector.send("Подключение установлено");
         try {
             context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
             unmarshaller = context.createUnmarshaller();
@@ -97,6 +98,7 @@ public class Handler implements Serializable, Runnable {
             command.setManager(manager);
             invoker.execute(command);
         }
+        System.out.println("Соединение с пользователем " + connector.userAddress + ":" + connector.userPort + " разорвано.");
     }
 }
 

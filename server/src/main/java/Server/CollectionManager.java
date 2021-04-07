@@ -4,6 +4,7 @@ import content.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.MarshalException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -109,7 +110,7 @@ public class CollectionManager {
 
 
     public void exit(){
-        Handler.isExit = true;
+        handler.isExit = true;
     }
     /**
      * Удалить элемент коллекции по его id
@@ -134,16 +135,24 @@ public class CollectionManager {
     /**
      * Сохранить коллекцию в файл
      * @param manager : объект для доступа к коллекции
-     * @throws IOException если файл не найден или защищен
-     * @throws JAXBException если не удалось сериализовать коллекцию
      */
-    public void save(CollectionManager manager) throws IOException, JAXBException {
-        FileWriter writer = new FileWriter("C:\\Users\\User\\IdeaProjects\\lab5_maven\\src\\main\\java\\inputData\\output.xml");
-        JAXBContext context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        marshaller.marshal(manager, writer);
-        connector.send("Коллекция успешно сохранена.");
+    public void save(CollectionManager manager){
+        try {
+            FileWriter writer = new FileWriter("C:\\Users\\User\\IdeaProjects\\lab5_maven\\src\\main\\java\\inputData\\output.xml");
+            JAXBContext context = JAXBContext.newInstance(Flat.class, CollectionManager.class, House.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaller.marshal(manager, writer);
+            connector.send("Коллекция успешно сохранена.");
+        }catch (FileNotFoundException e) {
+            connector.send("Ошибка. Файл для сохранения не найден, проверьте путь и доступ к файлу.");
+        } catch (IOException e) {
+            connector.send("Ошибка сохранения.");
+        } catch (MarshalException e) {
+            connector.send("Ошибка сериализации коллекции в XML.");
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -214,6 +223,10 @@ public class CollectionManager {
      */
     public void execute_script(String path) throws FileNotFoundException {
         InputStream stream;
+        if (path.substring(0,4).equals("/dev")){
+            connector.send("Файл для извлечения скрипта не найден. Проверьте путь и права доступа к файлу.");
+            return;
+        }
         try{
             stream = new BufferedInputStream(new FileInputStream(path));
         }catch (FileNotFoundException e){
@@ -223,13 +236,12 @@ public class CollectionManager {
         if (handler.getStream().equals(System.in)) {
             pathList.clear();
         } else {
-            System.out.println(pathList.toString());
-            System.out.println(path);
             if (pathList.contains(path)) {
                 connector.send("#############################################\nОшибка! Один или несколько скриптов зациклены.\n#############################################");
                 return;
             }
-        }  //Проверка на зацикленность
+        }
+        //Проверка на зацикленность
         pathList.add(path);
         connector.send("====  Начало выполнения скрипта по адресу " + path + "  ====");
         handler.interactiveMod(stream);

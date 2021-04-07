@@ -4,12 +4,12 @@ package Client;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.ClosedByInterruptException;
 import java.nio.channels.DatagramChannel;
 
 
 public class Connector implements Runnable {
-    private final int PORT = 1213;
-    InetSocketAddress serverAddress = new InetSocketAddress("localhost", PORT);
+    InetSocketAddress serverAddress;
     DatagramChannel client;
 
     ByteArrayOutputStream b1 = new ByteArrayOutputStream(1024);
@@ -20,8 +20,9 @@ public class Connector implements Runnable {
     ByteBuffer byteBuffer;
     byte[] buffer = new byte[1024];
 
-    public Connector() {
+    public Connector(int PORT) {
         try {
+            serverAddress = new InetSocketAddress("localhost", PORT);
             client = DatagramChannel.open();
             client.bind(null);
             outputStream = new ObjectOutputStream(b1);
@@ -49,10 +50,14 @@ public class Connector implements Runnable {
         try {
             buffer = new byte[2048];
             client.receive(ByteBuffer.wrap(buffer));
+            Main.connected = true;
             input = new ObjectInputStream(new ByteArrayInputStream(buffer));
             return (String) input.readObject();
 
-        } catch (IOException | ClassNotFoundException e) {
+        }catch (ClosedByInterruptException ignored){
+            return "";
+        }
+        catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return "Ошибка";
         }
@@ -61,7 +66,7 @@ public class Connector implements Runnable {
 
     @Override
     public void run() {
-        while (!isExit) {
+        while (!isExit){
             System.out.println(receive());
         }
     }

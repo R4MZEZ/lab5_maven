@@ -12,13 +12,13 @@ import java.util.Scanner;
 public class Commander {
 
     Invoker invoker = new Invoker();
-    Connector connector = new Connector();
-    Thread connectorThread;
+    Connector connector;
+    static Thread connectorThread;
 
-    public Commander(String filePath){
+    public Commander(String filePath, int PORT){
+        connector = new Connector(PORT);
         connectorThread = new Thread(connector);
         connectorThread.start();
-        System.out.println("Отправка входного файла..");
         connector.send(filePath);
 
         invoker.register("help", new CommandHelp());
@@ -50,7 +50,7 @@ public class Commander {
         String fullUserCommand = "";
         if (stream.equals(System.in))System.out.println("***\tНачало работы. Для просмотра доступных команд напишите 'help'\t***");
         try (Scanner commandReader = new Scanner(stream)) {
-            while (!fullUserCommand.equals("exit") && commandReader.hasNext()) {
+            do{
                 fullUserCommand = commandReader.nextLine();
                 String[] command = fullUserCommand.trim().split(" ");
                 if (invoker.contains(command[0])) {
@@ -65,7 +65,7 @@ public class Commander {
                     }
                 }else System.out.println("Неопознанная команда! Введите 'help' для просмотра доступных команд.");
 
-            }
+            }while (!fullUserCommand.equals("exit") && commandReader.hasNext());
         }
         System.out.println("***\tВыход из интерактивного режима\t***");
         Connector.isExit = true;
